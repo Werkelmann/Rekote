@@ -1,5 +1,6 @@
 package de.werkelmann.rekote;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
@@ -11,7 +12,7 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import de.werkelmann.rekote.client.RekoteHttpClient;
-import de.werkelmann.rekote.server.model.HostInfo;
+import de.werkelmann.rekote.model.HostInfo;
 import de.werkelmann.rekote.settings.SettingsActivity;
 import de.werkelmann.rekote.util.RekoteException;
 
@@ -95,6 +96,8 @@ public class MainActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         if (id == R.id.action_settings) {
+            Intent intent = new Intent(this, SettingsActivity.class);
+            startActivity(intent);
             return true;
         }
 

@@ -3,8 +3,8 @@ package de.werkelmann.rekote.client;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+import de.werkelmann.rekote.model.HostInfo;
 import de.werkelmann.rekote.util.RekoteException;
-import de.werkelmann.rekote.server.model.HostInfo;
 
 public class RekoteHttpClient {
 
