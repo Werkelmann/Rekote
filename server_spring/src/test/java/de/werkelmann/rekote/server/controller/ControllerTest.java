@@ -12,8 +12,9 @@ import org.springframework.web.context.WebApplicationContext;
 
 import de.werkelmann.rekote.server.ServerMain;
 
+import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.nullValue;
-import static org.hamcrest.Matchers.not;
+import static org.hamcrest.CoreMatchers.not;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -41,4 +42,5 @@ public class ControllerTest {
                 .andExpect(jsonPath("hostName", not(nullValue())))
                 .andExpect(jsonPath("ipAddress", not(nullValue())));
     }
+
 }
