@@ -1,8 +1,7 @@
 package de.werkelmann.rekote;
 
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -13,6 +12,8 @@ import android.widget.Toast;
 
 import de.werkelmann.rekote.client.RekoteHttpClient;
 import de.werkelmann.rekote.server.model.HostInfo;
+import de.werkelmann.rekote.settings.SettingsActivity;
+import de.werkelmann.rekote.util.RekoteException;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -25,9 +26,23 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        httpClient = new RekoteHttpClient();
+        try {
+            httpClient = initClient();
+        } catch (RekoteException e) {
+            httpClient = showDialogForUrl();
+        }
 
         initButtons();
+    }
+
+    private RekoteHttpClient showDialogForUrl() {
+        //TODO force correct url input
+        return null;
+    }
+
+    private RekoteHttpClient initClient() throws RekoteException {
+        String urlAddress = PreferenceManager.getDefaultSharedPreferences(this).getString(SettingsActivity.SERVER_URL, "");
+        return new RekoteHttpClient(urlAddress);
     }
 
     private void initButtons() {
