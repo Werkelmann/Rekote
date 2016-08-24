@@ -1,19 +1,21 @@
 package de.werkelmann.rekote;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
 import de.werkelmann.rekote.client.RekoteHttpClient;
 import de.werkelmann.rekote.model.HostInfo;
 import de.werkelmann.rekote.settings.SettingsActivity;
+import de.werkelmann.rekote.settings.SettingsConstants;
 import de.werkelmann.rekote.util.RekoteException;
 
 public class MainActivity extends AppCompatActivity {
@@ -30,19 +32,21 @@ public class MainActivity extends AppCompatActivity {
         try {
             httpClient = initClient();
         } catch (RekoteException e) {
-            httpClient = showDialogForUrl();
+            httpClient = showDialogForAddress();
         }
 
         initButtons();
     }
 
-    private RekoteHttpClient showDialogForUrl() {
+    private RekoteHttpClient showDialogForAddress() {
         //TODO force correct url input
+        Toast.makeText(this, "Invalid Address", Toast.LENGTH_LONG).show();
         return null;
     }
 
     private RekoteHttpClient initClient() throws RekoteException {
-        String urlAddress = PreferenceManager.getDefaultSharedPreferences(this).getString(SettingsActivity.SERVER_URL, "");
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        String urlAddress = prefs.getString(SettingsConstants.SERVER_URL, "");
         return new RekoteHttpClient(urlAddress);
     }
 
@@ -50,6 +54,7 @@ public class MainActivity extends AppCompatActivity {
         Button btnShutdown = (Button) findViewById(R.id.btn_shutdown);
         Button btnShutdownIn = (Button) findViewById(R.id.btn_shutdown_in);
         Button btnHostInfo = (Button) findViewById(R.id.btn_host_info);
+        Button btnStopShutdown = (Button) findViewById(R.id.btn_stop_shutdown);
 
         assert btnShutdown != null;
         btnShutdown.setOnClickListener(new View.OnClickListener() {
@@ -77,6 +82,14 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 HostInfo info = httpClient.getHostInfo();
                 showInfo(info);
+            }
+        });
+
+        assert btnStopShutdown != null;
+        btnStopShutdown.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                httpClient.stopShutdown();
             }
         });
     }

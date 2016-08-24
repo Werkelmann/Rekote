@@ -36,6 +36,17 @@
         android:layout_height="wrap_content"
         android:text="@string/btn_host_info"
         android:id="@+id/btn_host_info"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_below="@+id/btn_shutdown_in"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/btn_stop_shutdown"
+        android:id="@+id/btn_stop_shutdown"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/btn_shutdown"
+        android:layout_alignParentEnd="true" />
+
 </RelativeLayout>

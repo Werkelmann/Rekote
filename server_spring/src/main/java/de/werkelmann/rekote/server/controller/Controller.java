@@ -23,10 +23,15 @@ public class Controller {
         shutdownIn(0);
     }
 
-    @RequestMapping(path = "/shutdown/{seconds}")
+    @RequestMapping(path = "/shutdown/{seconds}", method = RequestMethod.GET)
     public void shutdownIn(@PathVariable int seconds) throws IOException {
         Runtime runtime = Runtime.getRuntime();
         Process proc = runtime.exec("shutdown -s -t " + seconds);
-        System.exit(0);
+    }
+
+    @RequestMapping(path = "/shutdown/stop", method = RequestMethod.GET)
+    public void stopShutdown() throws IOException {
+        Runtime runtime = Runtime.getRuntime();
+        Process proc = runtime.exec("shutdown -a");
     }
 }

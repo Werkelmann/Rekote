@@ -3,6 +3,8 @@ package de.werkelmann.rekote.client;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+import de.werkelmann.rekote.client.ip.IpChecker;
+import de.werkelmann.rekote.client.url.UrlChecker;
 import de.werkelmann.rekote.model.HostInfo;
 import de.werkelmann.rekote.util.RekoteException;
 
@@ -18,15 +20,15 @@ public class RekoteHttpClient {
             this.hostAddress = urlAddress;
             return;
         }
-        throw new RekoteException("Invalid Url");
+        throw new RekoteException("Invalid server address");
     }
 
-    private boolean isValidAddress(String urlAddress) {
-        //TODO check if valid url
-        return false;
+    private boolean isValidAddress(String address) {
+        return new UrlChecker().check(address) || new IpChecker().check(address);
     }
 
     public boolean shutdown() {
+        //TODO shutdown
         return false;
     }
 
@@ -39,5 +41,10 @@ public class RekoteHttpClient {
             e.printStackTrace(); //TODO try-catch in own class, error cannot happen because url must be valid
         }
         return null;
+    }
+
+    public boolean stopShutdown() {
+        //TODO stop shutdown
+        return false;
     }
 }
