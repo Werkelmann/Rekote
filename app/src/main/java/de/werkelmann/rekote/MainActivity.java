@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -18,6 +17,7 @@ import de.werkelmann.rekote.model.HostInfo;
 import de.werkelmann.rekote.settings.SettingsActivity;
 import de.werkelmann.rekote.settings.SettingsConstants;
 import de.werkelmann.rekote.util.RekoteException;
+import de.werkelmann.rekote.view.dialogs.HostInfoDialog;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -102,9 +102,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void showInfo(HostInfo info) {
-        //TODO show infos somehow
-        Log.e("info", info.toString());
-        Toast.makeText(this, info.toString(), Toast.LENGTH_LONG).show();
+        HostInfoDialog dialog = new HostInfoDialog();
+        dialog.setHostInfo(info);
+        dialog.show(getFragmentManager(), "info");
     }
 
     @Override
