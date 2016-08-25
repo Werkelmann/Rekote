@@ -6,6 +6,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 import de.werkelmann.rekote.client.address.ip.IpChecker;
+import de.werkelmann.rekote.client.address.port.PortChecker;
 import de.werkelmann.rekote.client.tasks.GetInfoAsyncTask;
 import de.werkelmann.rekote.client.address.url.UrlChecker;
 import de.werkelmann.rekote.model.HostInfo;
@@ -34,12 +35,7 @@ public class RekoteHttpClient {
     }
 
     private boolean isValidPort(String port) {
-        try {
-            Integer portNumber = Integer.parseInt(port);
-            return 0 < portNumber && portNumber < 65536;
-        } catch (NumberFormatException e) {
-            return false;
-        }
+        return new PortChecker().check(port);
     }
 
     public boolean shutdown() {
