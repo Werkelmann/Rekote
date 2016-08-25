@@ -27,12 +27,7 @@ public class Controller {
         }
     }
 
-    @RequestMapping(path = "/shutdown", method = RequestMethod.GET)
-    public ResponseEntity<Void> instantShutdown() {
-        return shutdownIn(0);
-    }
-
-    @RequestMapping(path = "/shutdown/{seconds}", method = RequestMethod.GET)
+    @RequestMapping(path = "/shutdown/{minutes}", method = RequestMethod.GET)
     public ResponseEntity<Void> shutdownIn(@PathVariable int minutes) {
         try {
             Runtime runtime = Runtime.getRuntime();

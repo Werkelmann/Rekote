@@ -9,6 +9,7 @@ import de.werkelmann.rekote.client.address.ip.IpChecker;
 import de.werkelmann.rekote.client.address.port.PortChecker;
 import de.werkelmann.rekote.client.tasks.GetInfoAsyncTask;
 import de.werkelmann.rekote.client.address.url.UrlChecker;
+import de.werkelmann.rekote.client.tasks.ShutdownAsyncTask;
 import de.werkelmann.rekote.model.HostInfo;
 import de.werkelmann.rekote.util.RekoteException;
 
@@ -17,6 +18,8 @@ public class RekoteHttpClient {
     private final static String PROTOCOL_PREFIX = "http://";
     private final static String PATH = "/rekote";
     private final static String PATH_INFO = PATH + "/info";
+    private final static String PATH_SHUTDOWN_IN = PATH + "/shutdown/";
+    private final static String PATH_SHUTDOWN_STOP = PATH_SHUTDOWN_IN + "stop";
 
     private String hostAddress;
     private String port;
@@ -38,10 +41,6 @@ public class RekoteHttpClient {
         return new PortChecker().check(port);
     }
 
-    public boolean shutdown() {
-        return shutdownIn(0);
-    }
-
     public HostInfo getHostInfo() throws RekoteException {
         HostInfo info;
         try {
@@ -57,8 +56,13 @@ public class RekoteHttpClient {
     }
 
     public boolean stopShutdown() {
-        //TODO stop shutdown
-        return false;
+        try {
+            AsyncTask<URL, Void, Boolean> stopShutdown = new ShutdownAsyncTask();
+            stopShutdown.execute(buildUrl(PATH_SHUTDOWN_STOP));
+            return stopShutdown.get();
+        } catch (Exception e) {
+            return false;
+        }
     }
 
     private URL buildUrl(String pathSuffix) throws MalformedURLException {
@@ -66,7 +70,12 @@ public class RekoteHttpClient {
     }
 
     public boolean shutdownIn(int minutes) {
-        //todo shutdown request
-        return false;
+        try {
+            AsyncTask<URL, Void, Boolean> stopShutdown = new ShutdownAsyncTask();
+            stopShutdown.execute(buildUrl(PATH_SHUTDOWN_IN + minutes));
+            return stopShutdown.get();
+        } catch (Exception e) {
+            return false;
+        }
     }
 }
