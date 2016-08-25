@@ -10,10 +10,12 @@ buildscript {
 apply plugin: 'java'
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-
+    compile fileTree(include: ['*.jar'], dir: 'libs')
     compile 'junit:junit:4.12'
+    compile 'org.springframework.boot:spring-boot-starter-web:1.4.0.RELEASE'
+    testCompile 'org.springframework.boot:spring-boot-starter-test:1.4.0.RELEASE'
+    compile project(':common')
 
-    compile("org.springframework.boot:spring-boot-starter-web:1.4.0.RELEASE")
-    testCompile('org.springframework.boot:spring-boot-starter-test:1.4.0.RELEASE')
+    sourceCompatibility = '1.7'
+    targetCompatibility = '1.7'
 }

@@ -9,8 +9,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.io.IOException;
 
-import de.werkelmann.rekote.server.model.HostInfo;
-import de.werkelmann.rekote.server.util.RekoteException;
+import de.werkelmann.rekote.model.HostInfo;
+import de.werkelmann.rekote.util.RekoteException;
+
 
 @RestController
 @RequestMapping("/rekote")
