@@ -7,6 +7,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class ServerMain {
 
     public static void main(String[] args) {
+        CustomTrayIcon.create();
         SpringApplication.run(ServerMain.class, args);
     }
 }
