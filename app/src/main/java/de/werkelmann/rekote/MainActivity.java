@@ -18,9 +18,10 @@ import de.werkelmann.rekote.settings.SettingsActivity;
 import de.werkelmann.rekote.settings.SettingsConstants;
 import de.werkelmann.rekote.util.RekoteException;
 import de.werkelmann.rekote.view.HostAddressInputDialogListener;
+import de.werkelmann.rekote.view.ShutdownTimeDialogListener;
 import de.werkelmann.rekote.view.dialogs.DialogFactory;
 
-public class MainActivity extends AppCompatActivity implements HostAddressInputDialogListener {
+public class MainActivity extends AppCompatActivity implements HostAddressInputDialogListener, ShutdownTimeDialogListener {
 
     private RekoteHttpClient httpClient;
     private DialogFactory dialogFactory;
@@ -64,11 +65,7 @@ public class MainActivity extends AppCompatActivity implements HostAddressInputD
         btnShutdown.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (httpClient.shutdown()) {
-                    Toast.makeText(MainActivity.this, "Shutdown successfull", Toast.LENGTH_LONG).show();
-                    return;
-                }
-                Toast.makeText(MainActivity.this, "Failure at shutdown", Toast.LENGTH_LONG).show();
+                showResponseInToast(httpClient.shutdown());
             }
         });
 
@@ -76,7 +73,7 @@ public class MainActivity extends AppCompatActivity implements HostAddressInputD
         btnShutdownIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //TODO Shutdown in dialog
+                dialogFactory.showShutdownTimeDialog();
             }
         });
 
@@ -100,6 +97,14 @@ public class MainActivity extends AppCompatActivity implements HostAddressInputD
                 httpClient.stopShutdown();
             }
         });
+    }
+
+    private void showResponseInToast(boolean isSuccessful) {
+        if (isSuccessful) {
+            Toast.makeText(MainActivity.this, "Shutdown successful", Toast.LENGTH_LONG).show();
+            return;
+        }
+        Toast.makeText(MainActivity.this, "Failure at shutdown", Toast.LENGTH_LONG).show();
     }
 
     @Override
@@ -134,5 +139,10 @@ public class MainActivity extends AppCompatActivity implements HostAddressInputD
             Toast.makeText(this, "Still invalid", Toast.LENGTH_LONG).show();
             showDialogForAddress();
         }
+    }
+
+    @Override
+    public void shutdown(int minutes) {
+        showResponseInToast(httpClient.shutdownIn(minutes));
     }
 }

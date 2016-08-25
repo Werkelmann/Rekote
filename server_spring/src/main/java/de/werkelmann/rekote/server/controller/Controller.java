@@ -33,14 +33,18 @@ public class Controller {
     }
 
     @RequestMapping(path = "/shutdown/{seconds}", method = RequestMethod.GET)
-    public ResponseEntity<Void> shutdownIn(@PathVariable int seconds) {
+    public ResponseEntity<Void> shutdownIn(@PathVariable int minutes) {
         try {
             Runtime runtime = Runtime.getRuntime();
-            Process proc = runtime.exec("shutdown -s -t " + seconds);
+            Process proc = runtime.exec("shutdown -s -t " + asSeconds(minutes));
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (IOException e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
+    }
+
+    private int asSeconds(int minutes) {
+        return minutes * 60;
     }
 
     @RequestMapping(path = "/shutdown/stop", method = RequestMethod.GET)

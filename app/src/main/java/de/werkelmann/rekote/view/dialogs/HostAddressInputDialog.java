@@ -56,7 +56,7 @@ public class HostAddressInputDialog extends DialogFragment {
             mListener = (HostAddressInputDialogListener) activity;
         } catch (ClassCastException e) {
             throw new ClassCastException(activity.toString()
-                    + " must implement NoticeDialogListener");
+                    + " must implement HostAddressInputDialogListener");
         }
     }
 }

@@ -39,8 +39,7 @@ public class RekoteHttpClient {
     }
 
     public boolean shutdown() {
-        //TODO shutdown
-        return false;
+        return shutdownIn(0);
     }
 
     public HostInfo getHostInfo() throws RekoteException {
@@ -64,5 +63,10 @@ public class RekoteHttpClient {
 
     private URL buildUrl(String pathSuffix) throws MalformedURLException {
         return new URL(PROTOCOL_PREFIX + hostAddress + ":" + port + pathSuffix);
+    }
+
+    public boolean shutdownIn(int minutes) {
+        //todo shutdown request
+        return false;
     }
 }
