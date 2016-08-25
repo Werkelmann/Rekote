@@ -23,7 +23,7 @@ import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppC
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest(classes = ServerMain.class)
 @WebAppConfiguration
-public class ControllerTest {
+public class RekoteControllerTest {
 
     private MockMvc mockMvc;
 

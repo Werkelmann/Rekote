@@ -15,7 +15,7 @@ import de.werkelmann.rekote.util.RekoteException;
 
 @RestController
 @RequestMapping("/rekote")
-public class Controller {
+public class RekoteController {
 
     @RequestMapping(path = "/info", method = RequestMethod.GET)
     public ResponseEntity<HostInfo> getInfo() {
