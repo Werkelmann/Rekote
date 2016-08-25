@@ -48,12 +48,17 @@ public class RekoteHttpClient {
     }
 
     public HostInfo getHostInfo() throws RekoteException {
+        HostInfo info;
         try {
             AsyncTask<URL, Void, HostInfo> getInfo = new GetInfoAsyncTask();
-            return getInfo.execute(buildUrl(PATH_INFO)).get();
+            info = getInfo.execute(buildUrl(PATH_INFO)).get();
         } catch (Exception e) {
-            throw new RekoteException("Could not get Info from server");
+            info = null;
         }
+        if (info != null) {
+            return info;
+        }
+        throw new RekoteException("Could not get Info from server");
     }
 
     public boolean stopShutdown() {

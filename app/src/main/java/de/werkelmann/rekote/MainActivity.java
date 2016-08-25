@@ -17,11 +17,13 @@ import de.werkelmann.rekote.model.HostInfo;
 import de.werkelmann.rekote.settings.SettingsActivity;
 import de.werkelmann.rekote.settings.SettingsConstants;
 import de.werkelmann.rekote.util.RekoteException;
+import de.werkelmann.rekote.view.dialogs.DialogFactory;
 import de.werkelmann.rekote.view.dialogs.HostInfoDialog;
 
 public class MainActivity extends AppCompatActivity {
 
     private RekoteHttpClient httpClient;
+    private DialogFactory dialogFactory;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +31,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        dialogFactory = new DialogFactory(this);
 
         try {
             httpClient = initClient();
@@ -84,10 +88,9 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 try {
                     HostInfo info = httpClient.getHostInfo();
-                    showInfo(info);
+                    dialogFactory.showInfoDialog(info);
                 } catch (RekoteException e) {
-                    e.printStackTrace();
-                    //TODO catch exception when server did not give info
+                    dialogFactory.showInfoExceptionDialog();
                 }
             }
         });
@@ -99,12 +102,6 @@ public class MainActivity extends AppCompatActivity {
                 httpClient.stopShutdown();
             }
         });
-    }
-
-    private void showInfo(HostInfo info) {
-        HostInfoDialog dialog = new HostInfoDialog();
-        dialog.setHostInfo(info);
-        dialog.show(getFragmentManager(), "info");
     }
 
     @Override

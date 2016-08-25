@@ -1,6 +1,6 @@
 package de.werkelmann.rekote.util;
 
-public class RekoteException extends Exception {
+public class RekoteException extends RuntimeException {
 
     public RekoteException(String detailMessage) {
         super(detailMessage);

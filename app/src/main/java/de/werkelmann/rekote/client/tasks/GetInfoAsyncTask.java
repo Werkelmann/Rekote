@@ -13,21 +13,23 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 import de.werkelmann.rekote.model.HostInfo;
+import de.werkelmann.rekote.util.RekoteException;
 
 public class GetInfoAsyncTask extends AsyncTask<URL, Void, HostInfo> {
 
     @Override
     protected HostInfo doInBackground(URL... params) {
+        HttpURLConnection connection;
         try {
             URL url = params[0];
-            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection = (HttpURLConnection) url.openConnection();
+            connection.setConnectTimeout(5000);
             connection.connect();
             if (connection.getResponseCode() == 200) {
                 JSONObject message = readFromConnection(connection);
                 return new HostInfo(message);
             }
         } catch (Exception e) {
-            e.printStackTrace();
         }
         return null;
     }

@@ -16,4 +16,5 @@
     <string name="tv_ip">IP: </string>
     <string name="tv_placeholder">tv_placeholder</string>
     <string name="ok">OK</string>
+    <string name="error_no_info">Error while getting info from server</string>
 </resources>
