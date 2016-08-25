@@ -1,8 +1,7 @@
-package de.werkelmann.rekote.client.url;
+package de.werkelmann.rekote.client.address.url;
 
-import java.util.LinkedList;
-
-import de.werkelmann.rekote.client.AddressChecker;
+import de.werkelmann.rekote.client.address.AddressChecker;
+import de.werkelmann.rekote.client.address.NotEmptyRule;
 
 /**
  * checks for a valid url
@@ -11,8 +10,7 @@ import de.werkelmann.rekote.client.AddressChecker;
 public class UrlChecker extends AddressChecker {
 
     public UrlChecker() {
-        rules = new LinkedList<>();
-
+        rules.add(new NotEmptyRule());
         rules.add(new UrlLengthRule());
         rules.add(new UrlValidCharRule());
         rules.add(new UrlLabelsLengthRule());

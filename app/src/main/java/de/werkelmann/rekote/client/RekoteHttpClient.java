@@ -5,9 +5,9 @@ import android.os.AsyncTask;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-import de.werkelmann.rekote.client.ip.IpChecker;
+import de.werkelmann.rekote.client.address.ip.IpChecker;
 import de.werkelmann.rekote.client.tasks.GetInfoAsyncTask;
-import de.werkelmann.rekote.client.url.UrlChecker;
+import de.werkelmann.rekote.client.address.url.UrlChecker;
 import de.werkelmann.rekote.model.HostInfo;
 import de.werkelmann.rekote.util.RekoteException;
 

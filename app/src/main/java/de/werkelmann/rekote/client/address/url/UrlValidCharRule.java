@@ -1,6 +1,6 @@
-package de.werkelmann.rekote.client.url;
+package de.werkelmann.rekote.client.address.url;
 
-import de.werkelmann.rekote.client.AddressRule;
+import de.werkelmann.rekote.client.address.AddressRule;
 
 public class UrlValidCharRule implements AddressRule {
     @Override
