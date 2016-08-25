@@ -5,11 +5,11 @@
     <string name="btn_shutdown_in">Shutdown in&#8230;</string>
     <string name="info">Info</string>
     <string name="title_activity_settings">Settings</string>
-    <string name="pref_url">URL</string>
-    <string name="pref_url_to_server">URL to the server</string>
+    <string name="pref_address">Address</string>
+    <string name="pref_address_of_server">Address of the server</string>
     <string name="pref_enter_your_host">Enter your Host</string>
     <string name="btn_stop_shutdown">Stop Shutdown</string>
-    <string name="pref_port">Port</string>
+    <string name="port">Port</string>
     <string name="pref_port_of_server">Port of the server</string>
     <string name="pref_enter_your_port">Enter your Port</string>
     <string name="tv_host">Host: </string>
@@ -17,4 +17,7 @@
     <string name="tv_placeholder">tv_placeholder</string>
     <string name="ok">OK</string>
     <string name="error_no_info">Error while getting info from server</string>
+    <string name="address">Address: </string>
+    <string name="tv_port">Port:</string>
+    <string name="dialog_insert_valid_values">Please insert valid values</string>
 </resources>

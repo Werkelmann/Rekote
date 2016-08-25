@@ -21,9 +21,9 @@ public class RekoteHttpClient {
     private String hostAddress;
     private String port;
 
-    public RekoteHttpClient(String urlAddress, String port) throws RekoteException {
-        if (isValidAddress(urlAddress) && isValidPort(port)) {
-            this.hostAddress = urlAddress;
+    public RekoteHttpClient(String address, String port) throws RekoteException {
+        if (isValidAddress(address) && isValidPort(port)) {
+            this.hostAddress = address;
             this.port = port;
             return;
         }

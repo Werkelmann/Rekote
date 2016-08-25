@@ -3,6 +3,8 @@ package de.werkelmann.rekote.view.dialogs;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.support.v4.app.DialogFragment;
+import android.support.v4.app.FragmentActivity;
 
 import de.werkelmann.rekote.R;
 import de.werkelmann.rekote.model.HostInfo;
@@ -19,6 +21,11 @@ public class DialogFactory {
         HostInfoDialog dialog = new HostInfoDialog();
         dialog.setHostInfo(info);
         dialog.show(context.getFragmentManager(), "info");
+    }
+
+    public void showAddressInputDialog() {
+        DialogFragment dialog = new HostAddressInputDialog();
+        dialog.show(((FragmentActivity) context).getSupportFragmentManager(), "input");
     }
 
     public void showInfoExceptionDialog() {

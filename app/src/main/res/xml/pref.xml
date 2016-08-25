@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
     <EditTextPreference
-        android:key="pref_url"
-        android:title="@string/pref_url"
-        android:summary="@string/pref_url_to_server"
+        android:key="pref_address"
+        android:title="@string/pref_address"
+        android:summary="@string/pref_address_of_server"
         android:defaultValue="@string/pref_enter_your_host" />
 
     <EditTextPreference
         android:key="pref_port"
-        android:title="@string/pref_port"
+        android:title="@string/port"
         android:summary="@string/pref_port_of_server"
         android:defaultValue="@string/pref_enter_your_port"
         android:inputType="number"/>

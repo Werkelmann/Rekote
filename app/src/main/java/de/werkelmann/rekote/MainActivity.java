@@ -17,10 +17,10 @@ import de.werkelmann.rekote.model.HostInfo;
 import de.werkelmann.rekote.settings.SettingsActivity;
 import de.werkelmann.rekote.settings.SettingsConstants;
 import de.werkelmann.rekote.util.RekoteException;
+import de.werkelmann.rekote.view.HostAddressInputDialogListener;
 import de.werkelmann.rekote.view.dialogs.DialogFactory;
-import de.werkelmann.rekote.view.dialogs.HostInfoDialog;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements HostAddressInputDialogListener {
 
     private RekoteHttpClient httpClient;
     private DialogFactory dialogFactory;
@@ -37,21 +37,19 @@ public class MainActivity extends AppCompatActivity {
         try {
             httpClient = initClient();
         } catch (RekoteException e) {
-            httpClient = showDialogForAddress();
+            showDialogForAddress();
         }
 
         initButtons();
     }
 
-    private RekoteHttpClient showDialogForAddress() {
-        //TODO force correct url input
-        Toast.makeText(this, "Invalid Address", Toast.LENGTH_LONG).show();
-        return null;
+    private void showDialogForAddress() {
+        dialogFactory.showAddressInputDialog();
     }
 
-    private RekoteHttpClient initClient() throws RekoteException {
+    private RekoteHttpClient initClient() {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-        String urlAddress = prefs.getString(SettingsConstants.SERVER_URL, "");
+        String urlAddress = prefs.getString(SettingsConstants.SERVER_ADDRESS, "");
         String port = prefs.getString(SettingsConstants.SERVER_PORT, "");
         return new RekoteHttpClient(urlAddress, port);
     }
@@ -121,5 +119,20 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void updateClientSettings(String address, String port) {
+        try {
+            httpClient = new RekoteHttpClient(address, port);
+            SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+            SharedPreferences.Editor editor = prefs.edit();
+            editor.putString(SettingsConstants.SERVER_ADDRESS, address);
+            editor.putString(SettingsConstants.SERVER_PORT, port);
+            editor.apply();
+        } catch (RekoteException e) {
+            Toast.makeText(this, "Still invalid", Toast.LENGTH_LONG).show();
+            showDialogForAddress();
+        }
     }
 }
