@@ -1,28 +1,34 @@
 package de.werkelmann.rekote.model;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 
-//TODO as dependency
+import de.werkelmann.rekote.util.RekoteException;
+
 public class HostInfo {
 
     private final String hostName;
     private final String ipAddress;
 
-    public static HostInfo getInfo() {
+    public HostInfo() throws RekoteException {
         try {
-            String host = InetAddress.getLocalHost().getHostName();
-            String ip = InetAddress.getLocalHost().getHostAddress();
-            return new HostInfo(host, ip);
+            this.hostName = InetAddress.getLocalHost().getHostName();
+            this.ipAddress = InetAddress.getLocalHost().getHostAddress();
         } catch (UnknownHostException e) {
-            return new HostInfo("Could not get Host", "Could not get IP");
+            throw new RekoteException("HostInfo could not get initialized");
         }
-
     }
 
-    private HostInfo(String hostName, String ip) {
-        this.hostName = hostName;
-        this.ipAddress = ip;
+    public HostInfo(JSONObject message) throws RekoteException {
+        try {
+            this.hostName = message.getString("hostName");
+            this.ipAddress = message.getString("ipAddress");
+        } catch (JSONException e) {
+            throw new RekoteException("HostInfo could not get initialized");
+        }
     }
 
     public String getHostName() {
@@ -31,5 +37,10 @@ public class HostInfo {
 
     public String getIpAddress() {
         return ipAddress;
+    }
+
+    @Override
+    public String toString() {
+        return hostName + " " + ipAddress;
     }
 }

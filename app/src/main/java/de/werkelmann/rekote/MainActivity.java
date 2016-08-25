@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -47,7 +48,8 @@ public class MainActivity extends AppCompatActivity {
     private RekoteHttpClient initClient() throws RekoteException {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         String urlAddress = prefs.getString(SettingsConstants.SERVER_URL, "");
-        return new RekoteHttpClient(urlAddress);
+        String port = prefs.getString(SettingsConstants.SERVER_PORT, "");
+        return new RekoteHttpClient(urlAddress, port);
     }
 
     private void initButtons() {
@@ -64,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
                     Toast.makeText(MainActivity.this, "Shutdown successfull", Toast.LENGTH_LONG).show();
                     return;
                 }
-                    Toast.makeText(MainActivity.this, "Failure at shutdown", Toast.LENGTH_LONG).show();
+                Toast.makeText(MainActivity.this, "Failure at shutdown", Toast.LENGTH_LONG).show();
             }
         });
 
@@ -80,8 +82,13 @@ public class MainActivity extends AppCompatActivity {
         btnHostInfo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                HostInfo info = httpClient.getHostInfo();
-                showInfo(info);
+                try {
+                    HostInfo info = httpClient.getHostInfo();
+                    showInfo(info);
+                } catch (RekoteException e) {
+                    e.printStackTrace();
+                    //TODO catch exception when server did not give info
+                }
             }
         });
 
@@ -96,6 +103,8 @@ public class MainActivity extends AppCompatActivity {
 
     private void showInfo(HostInfo info) {
         //TODO show infos somehow
+        Log.e("info", info.toString());
+        Toast.makeText(this, info.toString(), Toast.LENGTH_LONG).show();
     }
 
     @Override

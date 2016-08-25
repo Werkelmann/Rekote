@@ -5,4 +5,11 @@
         android:title="@string/pref_url"
         android:summary="@string/pref_url_to_server"
         android:defaultValue="@string/pref_enter_your_host" />
+
+    <EditTextPreference
+        android:key="pref_port"
+        android:title="@string/pref_port"
+        android:summary="@string/pref_port_of_server"
+        android:defaultValue="@string/pref_enter_your_port"
+        android:inputType="number"/>
 </PreferenceScreen>

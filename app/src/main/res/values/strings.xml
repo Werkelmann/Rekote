@@ -67,4 +67,7 @@
     <string name="pref_url_to_server">URL to the server</string>
     <string name="pref_enter_your_host">Enter your Host</string>
     <string name="btn_stop_shutdown">Stop Shutdown</string>
+    <string name="pref_port">Port</string>
+    <string name="pref_port_of_server">Port of the server</string>
+    <string name="pref_enter_your_port">Enter your Port</string>
 </resources>
