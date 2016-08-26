@@ -1,0 +1,3 @@
+# Rekote
+
+someday i will rewrite the app in kotlin...
