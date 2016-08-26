@@ -34,25 +34,27 @@ public class MainActivity extends AppCompatActivity implements HostAddressInputD
         setSupportActionBar(toolbar);
 
         dialogFactory = new DialogFactory(this);
-
-        try {
-            httpClient = initClient();
-        } catch (RekoteException e) {
-            showDialogForAddress();
-        }
-
+        initClient();
         initButtons();
     }
 
-    private void showDialogForAddress() {
-        dialogFactory.showAddressInputDialog();
+    private void initClient() {
+        try {
+            httpClient = instantiateClient();
+        } catch (RekoteException e) {
+            showDialogForInvalidAddress();
+        }
     }
 
-    private RekoteHttpClient initClient() {
+    private RekoteHttpClient instantiateClient() {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         String urlAddress = prefs.getString(SettingsConstants.SERVER_ADDRESS, "");
         String port = prefs.getString(SettingsConstants.SERVER_PORT, "");
         return new RekoteHttpClient(urlAddress, port);
+    }
+
+    private void showDialogForInvalidAddress() {
+        dialogFactory.showAddressInputDialog();
     }
 
     private void initButtons() {
@@ -65,7 +67,7 @@ public class MainActivity extends AppCompatActivity implements HostAddressInputD
         btnShutdown.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showResponseInToast(httpClient.shutdownIn(0));
+                shutdownIn(0);
             }
         });
 
@@ -81,12 +83,7 @@ public class MainActivity extends AppCompatActivity implements HostAddressInputD
         btnHostInfo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                try {
-                    HostInfo info = httpClient.getHostInfo();
-                    dialogFactory.showInfoDialog(info);
-                } catch (RekoteException e) {
-                    dialogFactory.showInfoExceptionDialog();
-                }
+                showInfo();
             }
         });
 
@@ -104,7 +101,16 @@ public class MainActivity extends AppCompatActivity implements HostAddressInputD
             Toast.makeText(MainActivity.this, "Shutdown successful", Toast.LENGTH_LONG).show();
             return;
         }
-        Toast.makeText(MainActivity.this, "Failure at shutdown", Toast.LENGTH_LONG).show();
+        Toast.makeText(MainActivity.this, "Failure at shutdownIn", Toast.LENGTH_LONG).show();
+    }
+
+    private void showInfo() {
+        try {
+            HostInfo info = httpClient.getHostInfo();
+            dialogFactory.showInfoDialog(info);
+        } catch (RekoteException e) {
+            dialogFactory.showInfoExceptionDialog();
+        }
     }
 
     @Override
@@ -137,12 +143,12 @@ public class MainActivity extends AppCompatActivity implements HostAddressInputD
             editor.apply();
         } catch (RekoteException e) {
             Toast.makeText(this, "Still invalid", Toast.LENGTH_LONG).show();
-            showDialogForAddress();
+            showDialogForInvalidAddress();
         }
     }
 
     @Override
-    public void shutdown(int minutes) {
+    public void shutdownIn(int minutes) {
         showResponseInToast(httpClient.shutdownIn(minutes));
     }
 }

@@ -12,7 +12,6 @@ import java.io.IOException;
 import de.werkelmann.rekote.model.HostInfo;
 import de.werkelmann.rekote.util.RekoteException;
 
-
 @RestController
 @RequestMapping("/rekote")
 public class RekoteController {

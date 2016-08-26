@@ -31,7 +31,7 @@ public class ShutdownTimeDialog extends DialogFragment {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         int minutes = Integer.parseInt(editTime.getText().toString());
-                        mListener.shutdown(minutes);
+                        mListener.shutdownIn(minutes);
                     }
                 });
 
