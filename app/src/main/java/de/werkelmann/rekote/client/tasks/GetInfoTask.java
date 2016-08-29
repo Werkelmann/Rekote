@@ -15,7 +15,7 @@ import java.net.URL;
 import de.werkelmann.rekote.model.HostInfo;
 import de.werkelmann.rekote.util.RekoteException;
 
-public class GetInfoAsyncTask extends AsyncTask<URL, Void, HostInfo> {
+public class GetInfoTask extends AsyncTask<URL, Void, HostInfo> {
 
     @Override
     protected HostInfo doInBackground(URL... params) {
@@ -29,9 +29,10 @@ public class GetInfoAsyncTask extends AsyncTask<URL, Void, HostInfo> {
                 JSONObject message = readFromConnection(connection);
                 return new HostInfo(message);
             }
+            return null;
         } catch (Exception e) {
+            return null;
         }
-        return null;
     }
 
     private JSONObject readFromConnection(HttpURLConnection connection) throws IOException, JSONException {

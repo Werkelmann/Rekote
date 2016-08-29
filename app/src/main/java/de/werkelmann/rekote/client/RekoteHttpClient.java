@@ -7,13 +7,13 @@ import java.net.URL;
 
 import de.werkelmann.rekote.client.address.ip.IpChecker;
 import de.werkelmann.rekote.client.address.port.PortChecker;
-import de.werkelmann.rekote.client.tasks.GetInfoAsyncTask;
 import de.werkelmann.rekote.client.address.url.UrlChecker;
-import de.werkelmann.rekote.client.tasks.ShutdownAsyncTask;
+import de.werkelmann.rekote.client.tasks.GetInfoTask;
+import de.werkelmann.rekote.client.tasks.ShutdownTask;
 import de.werkelmann.rekote.model.HostInfo;
 import de.werkelmann.rekote.util.RekoteException;
 
-public class RekoteHttpClient {
+public class RekoteHttpClient implements RekoteClient {
 
     private final static String PROTOCOL_PREFIX = "http://";
     private final static String PATH = "/rekote";
@@ -41,10 +41,11 @@ public class RekoteHttpClient {
         return new PortChecker().check(port);
     }
 
+    @Override
     public HostInfo getHostInfo() throws RekoteException {
         HostInfo info;
         try {
-            AsyncTask<URL, Void, HostInfo> getInfo = new GetInfoAsyncTask();
+            AsyncTask<URL, Void, HostInfo> getInfo = new GetInfoTask();
             info = getInfo.execute(buildUrl(PATH_INFO)).get();
         } catch (Exception e) {
             info = null;
@@ -55,9 +56,10 @@ public class RekoteHttpClient {
         throw new RekoteException("Could not get Info from server");
     }
 
+    @Override
     public boolean stopShutdown() {
         try {
-            AsyncTask<URL, Void, Boolean> stopShutdown = new ShutdownAsyncTask();
+            AsyncTask<URL, Void, Boolean> stopShutdown = new ShutdownTask();
             stopShutdown.execute(buildUrl(PATH_SHUTDOWN_STOP));
             return stopShutdown.get();
         } catch (Exception e) {
@@ -69,9 +71,10 @@ public class RekoteHttpClient {
         return new URL(PROTOCOL_PREFIX + hostAddress + ":" + port + pathSuffix);
     }
 
+    @Override
     public boolean shutdownIn(int minutes) {
         try {
-            AsyncTask<URL, Void, Boolean> stopShutdown = new ShutdownAsyncTask();
+            AsyncTask<URL, Void, Boolean> stopShutdown = new ShutdownTask();
             stopShutdown.execute(buildUrl(PATH_SHUTDOWN_IN + minutes));
             return stopShutdown.get();
         } catch (Exception e) {

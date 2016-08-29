@@ -6,7 +6,7 @@ import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-public class ShutdownAsyncTask extends AsyncTask<URL, Void, Boolean> {
+public class ShutdownTask extends AsyncTask<URL, Void, Boolean> {
     @Override
     protected Boolean doInBackground(URL... params) {
         try {

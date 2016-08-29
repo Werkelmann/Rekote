@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import de.werkelmann.rekote.client.RekoteClient;
 import de.werkelmann.rekote.client.RekoteHttpClient;
 import de.werkelmann.rekote.model.HostInfo;
 import de.werkelmann.rekote.settings.SettingsActivity;
@@ -23,7 +24,7 @@ import de.werkelmann.rekote.view.dialogs.DialogFactory;
 
 public class MainActivity extends AppCompatActivity implements HostAddressInputDialogListener, ShutdownTimeDialogListener {
 
-    private RekoteHttpClient httpClient;
+    private RekoteClient httpClient;
     private DialogFactory dialogFactory;
 
     @Override
