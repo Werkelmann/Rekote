@@ -31,4 +31,5 @@ dependencies {
 
 springBoot {
     executable = true
+    mainClass = "ServerMain"
 }
