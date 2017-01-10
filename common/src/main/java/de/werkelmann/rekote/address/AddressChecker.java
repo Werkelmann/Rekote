@@ -1,4 +1,4 @@
-package de.werkelmann.rekote.client.address;
+package de.werkelmann.rekote.address;
 
 import java.util.LinkedList;
 import java.util.List;

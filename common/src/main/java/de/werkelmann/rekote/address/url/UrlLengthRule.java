@@ -1,6 +1,6 @@
-package de.werkelmann.rekote.client.address.url;
+package de.werkelmann.rekote.address.url;
 
-import de.werkelmann.rekote.client.address.AddressRule;
+import de.werkelmann.rekote.address.AddressRule;
 
 public class UrlLengthRule implements AddressRule {
 

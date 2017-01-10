@@ -1,6 +1,6 @@
-package de.werkelmann.rekote.client.address.port;
+package de.werkelmann.rekote.address.port;
 
-import de.werkelmann.rekote.client.address.AddressChecker;
+import de.werkelmann.rekote.address.AddressChecker;
 
 public class PortChecker extends AddressChecker {
 

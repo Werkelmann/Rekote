@@ -22,6 +22,11 @@ repositories {
     mavenCentral()
 }
 
+dependencies {
+    compile group: 'commons-validator', name: 'commons-validator', version: '1.5.0'
+    testCompile 'junit:junit:4.12'
+}
+
 sourceSets {
     main.java.srcDirs += 'src/main/kotlin'
 }

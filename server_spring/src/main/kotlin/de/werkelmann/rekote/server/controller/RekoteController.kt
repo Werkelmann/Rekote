@@ -13,11 +13,7 @@ import org.springframework.web.bind.annotation.RestController
 @RequestMapping("/rekote")
 class RekoteController {
 
-    private val shutdown: AbstractShutdown
-
-    init {
-        shutdown = ShutdownFactory.getCorrectShutdown()
-    }
+    private val shutdown: AbstractShutdown = ShutdownFactory.getCorrectShutdown()
 
     val info: ResponseEntity<HostInfo>
         @RequestMapping(path = arrayOf("/info"), method = arrayOf(RequestMethod.GET))

@@ -1,8 +1,7 @@
-package de.werkelmann.rekote.client.address.ip;
+package de.werkelmann.rekote.address.ip;
 
+import de.werkelmann.rekote.address.AddressRule;
 import org.apache.commons.validator.routines.InetAddressValidator;
-
-import de.werkelmann.rekote.client.address.AddressRule;
 
 public class IsIpRule implements AddressRule {
     @Override

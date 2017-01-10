@@ -1,7 +1,7 @@
-package de.werkelmann.rekote.client.address.url;
+package de.werkelmann.rekote.address.url;
 
-import de.werkelmann.rekote.client.address.AddressChecker;
-import de.werkelmann.rekote.client.address.NotEmptyRule;
+import de.werkelmann.rekote.address.AddressChecker;
+import de.werkelmann.rekote.address.NotEmptyRule;
 
 /**
  * checks for a valid url

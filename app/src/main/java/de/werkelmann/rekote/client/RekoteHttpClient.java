@@ -1,17 +1,16 @@
 package de.werkelmann.rekote.client;
 
 import android.os.AsyncTask;
-
-import java.net.MalformedURLException;
-import java.net.URL;
-
-import de.werkelmann.rekote.client.address.ip.IpChecker;
-import de.werkelmann.rekote.client.address.port.PortChecker;
-import de.werkelmann.rekote.client.address.url.UrlChecker;
+import de.werkelmann.rekote.address.ip.IpChecker;
+import de.werkelmann.rekote.address.port.PortChecker;
+import de.werkelmann.rekote.address.url.UrlChecker;
 import de.werkelmann.rekote.client.tasks.GetInfoTask;
 import de.werkelmann.rekote.client.tasks.ShutdownTask;
 import de.werkelmann.rekote.model.HostInfo;
 import de.werkelmann.rekote.util.RekoteException;
+
+import java.net.MalformedURLException;
+import java.net.URL;
 
 public class RekoteHttpClient implements RekoteClient {
 

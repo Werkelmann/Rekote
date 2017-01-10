@@ -31,5 +31,5 @@ dependencies {
 
 springBoot {
     executable = true
-    mainClass = "ServerMain"
+    mainClass = "de.werkelmann.rekote.server.ServerMainKt"
 }

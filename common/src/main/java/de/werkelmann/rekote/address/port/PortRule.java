@@ -1,6 +1,6 @@
-package de.werkelmann.rekote.client.address.port;
+package de.werkelmann.rekote.address.port;
 
-import de.werkelmann.rekote.client.address.AddressRule;
+import de.werkelmann.rekote.address.AddressRule;
 
 public class PortRule implements AddressRule {
     @Override
