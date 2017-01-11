@@ -3,7 +3,6 @@ package de.werkelmann.rekote.view.dialogs;
 import android.app.Activity;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentActivity;
-
 import de.werkelmann.rekote.model.HostInfo;
 
 public class DialogFactory {
@@ -32,6 +31,11 @@ public class DialogFactory {
 
     public void showShutdownTimeDialog() {
         DialogFragment dialog = new ShutdownTimeDialog();
+        dialog.show(((FragmentActivity) context).getSupportFragmentManager(), "input");
+    }
+
+    public void showErrorDialog() {
+        DialogFragment dialog = new ErrorDialog();
         dialog.show(((FragmentActivity) context).getSupportFragmentManager(), "input");
     }
 }

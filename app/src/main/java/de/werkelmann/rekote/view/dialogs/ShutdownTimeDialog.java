@@ -9,7 +9,6 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 import android.text.InputType;
 import android.widget.EditText;
-
 import de.werkelmann.rekote.R;
 import de.werkelmann.rekote.view.ShutdownTimeDialogListener;
 
@@ -30,8 +29,12 @@ public class ShutdownTimeDialog extends DialogFragment {
                 .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        int minutes = Integer.parseInt(editTime.getText().toString());
-                        mListener.shutdownIn(minutes);
+                        try {
+                            int minutes = Integer.parseInt(editTime.getText().toString());
+                            mListener.shutdownIn(minutes);
+                        } catch (NumberFormatException e) {
+                            mListener.showErrorDialog();
+                        }
                     }
                 });
 

@@ -2,13 +2,16 @@ package de.werkelmann.rekote.settings;
 
 
 import android.os.Bundle;
+import android.preference.EditTextPreference;
+import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceFragment;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBar;
 import android.view.MenuItem;
-
 import de.werkelmann.rekote.R;
+import de.werkelmann.rekote.address.port.PortChecker;
+import de.werkelmann.rekote.address.url.UrlChecker;
 
 /**
  * A {@link PreferenceActivity} that presents a set of application settings. On
@@ -44,14 +47,6 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
         }
     }
 
-    public static class SettingsFragment extends PreferenceFragment {
-        @Override
-        public void onCreate(Bundle savedInstanceState) {
-            super.onCreate(savedInstanceState);
-            addPreferencesFromResource(R.xml.pref);
-        }
-    }
-
     @Override
     public boolean onMenuItemSelected(int featureId, MenuItem item) {
         int id = item.getItemId();
@@ -62,6 +57,41 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             return true;
         }
         return super.onMenuItemSelected(featureId, item);
+    }
+
+    public static class SettingsFragment extends PreferenceFragment {
+        @Override
+        public void onCreate(Bundle savedInstanceState) {
+            super.onCreate(savedInstanceState);
+            addPreferencesFromResource(R.xml.pref);
+
+            EditTextPreference urlPref = (EditTextPreference) getPreferenceScreen()
+                    .findPreference(SettingsConstants.SERVER_ADDRESS);
+            EditTextPreference portPref = (EditTextPreference) getPreferenceScreen()
+                    .findPreference(SettingsConstants.SERVER_PORT);
+
+            urlPref.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+                @Override
+                public boolean onPreferenceChange(Preference preference, Object newValue) {
+                    if (new UrlChecker().check(newValue.toString())) {
+                        return true;
+                    }
+                    //Toast.makeText(getContext(), R.string.trivial_error_message, Toast.LENGTH_LONG).show();
+                    return false;
+                }
+            });
+
+            portPref.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+                @Override
+                public boolean onPreferenceChange(Preference preference, Object newValue) {
+                    if (new PortChecker().check(newValue.toString())) {
+                        return true;
+                    }
+                    //Toast.makeText(getContext(), R.string.trivial_error_message, Toast.LENGTH_LONG).show();
+                    return false;
+                }
+            });
+        }
     }
 
 }
