@@ -6,4 +6,6 @@ public interface RekoteClient {
     HostInfo getHostInfo();
     boolean stopShutdown();
     boolean shutdownIn(int minutes);
+
+    boolean informAboutCall(String caller);
 }

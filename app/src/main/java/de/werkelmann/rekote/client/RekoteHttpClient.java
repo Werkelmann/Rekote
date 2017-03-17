@@ -4,8 +4,8 @@ import android.os.AsyncTask;
 import de.werkelmann.rekote.address.ip.IpChecker;
 import de.werkelmann.rekote.address.port.PortChecker;
 import de.werkelmann.rekote.address.url.UrlChecker;
+import de.werkelmann.rekote.client.tasks.CallUrlTask;
 import de.werkelmann.rekote.client.tasks.GetInfoTask;
-import de.werkelmann.rekote.client.tasks.ShutdownTask;
 import de.werkelmann.rekote.model.HostInfo;
 import de.werkelmann.rekote.util.RekoteException;
 
@@ -15,10 +15,12 @@ import java.net.URL;
 public class RekoteHttpClient implements RekoteClient {
 
     private final static String PROTOCOL_PREFIX = "http://";
-    private final static String PATH = "/rekote";
-    private final static String PATH_INFO = PATH + "/info";
-    private final static String PATH_SHUTDOWN_IN = PATH + "/shutdown/";
-    private final static String PATH_SHUTDOWN_STOP = PATH_SHUTDOWN_IN + "stop";
+    private final static String PATH = "/rekote/";
+    private final static String PATH_INFO = PATH + "info/";
+    private final static String PATH_SHUTDOWN_IN = PATH + "shutdown/";
+    private final static String PATH_SHUTDOWN_STOP = PATH_SHUTDOWN_IN + "stop/";
+    private final static String PATH_EVENT = PATH + "event/";
+    private final static String PATH_CALL = PATH_EVENT + "call/";
 
     private String hostAddress;
     private String port;
@@ -58,7 +60,7 @@ public class RekoteHttpClient implements RekoteClient {
     @Override
     public boolean stopShutdown() {
         try {
-            AsyncTask<URL, Void, Boolean> stopShutdown = new ShutdownTask();
+            AsyncTask<URL, Void, Boolean> stopShutdown = new CallUrlTask();
             stopShutdown.execute(buildUrl(PATH_SHUTDOWN_STOP));
             return stopShutdown.get();
         } catch (Exception e) {
@@ -73,9 +75,20 @@ public class RekoteHttpClient implements RekoteClient {
     @Override
     public boolean shutdownIn(int minutes) {
         try {
-            AsyncTask<URL, Void, Boolean> stopShutdown = new ShutdownTask();
+            AsyncTask<URL, Void, Boolean> stopShutdown = new CallUrlTask();
             stopShutdown.execute(buildUrl(PATH_SHUTDOWN_IN + minutes));
             return stopShutdown.get();
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    @Override
+    public boolean informAboutCall(String caller) {
+        try {
+            AsyncTask<URL, Void, Boolean> informAboutCall = new CallUrlTask();
+            informAboutCall.execute(buildUrl(PATH_CALL + caller));
+            return informAboutCall.get();
         } catch (Exception e) {
             return false;
         }
