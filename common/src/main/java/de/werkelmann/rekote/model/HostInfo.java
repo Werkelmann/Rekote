@@ -1,12 +1,11 @@
 package de.werkelmann.rekote.model;
 
+import de.werkelmann.rekote.util.RekoteException;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
-
-import de.werkelmann.rekote.util.RekoteException;
 
 public class HostInfo {
 

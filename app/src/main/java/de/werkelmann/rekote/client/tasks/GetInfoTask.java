@@ -1,7 +1,7 @@
 package de.werkelmann.rekote.client.tasks;
 
 import android.os.AsyncTask;
-
+import de.werkelmann.rekote.model.HostInfo;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -11,9 +11,6 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-
-import de.werkelmann.rekote.model.HostInfo;
-import de.werkelmann.rekote.util.RekoteException;
 
 public class GetInfoTask extends AsyncTask<URL, Void, HostInfo> {
 
