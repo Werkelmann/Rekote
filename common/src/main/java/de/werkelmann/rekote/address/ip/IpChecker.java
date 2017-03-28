@@ -1,9 +1,9 @@
 package de.werkelmann.rekote.address.ip;
 
-import de.werkelmann.rekote.address.AddressChecker;
 import de.werkelmann.rekote.address.NotEmptyRule;
+import de.werkelmann.rekote.address.ServerConnectionChecker;
 
-public class IpChecker extends AddressChecker {
+public class IpChecker extends ServerConnectionChecker {
 
     public IpChecker() {
         rules.add(new NotEmptyRule());

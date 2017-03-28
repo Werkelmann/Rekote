@@ -10,8 +10,8 @@ import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBar;
 import android.view.MenuItem;
 import de.werkelmann.rekote.R;
+import de.werkelmann.rekote.address.AddressChecker;
 import de.werkelmann.rekote.address.port.PortChecker;
-import de.werkelmann.rekote.address.url.UrlChecker;
 
 /**
  * A {@link PreferenceActivity} that presents a set of application settings. On
@@ -73,22 +73,14 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             urlPref.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
                 @Override
                 public boolean onPreferenceChange(Preference preference, Object newValue) {
-                    if (new UrlChecker().check(newValue.toString())) {
-                        return true;
-                    }
-                    //Toast.makeText(getContext(), R.string.trivial_error_message, Toast.LENGTH_LONG).show();
-                    return false;
+                    return new AddressChecker().check(newValue.toString());
                 }
             });
 
             portPref.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
                 @Override
                 public boolean onPreferenceChange(Preference preference, Object newValue) {
-                    if (new PortChecker().check(newValue.toString())) {
-                        return true;
-                    }
-                    //Toast.makeText(getContext(), R.string.trivial_error_message, Toast.LENGTH_LONG).show();
-                    return false;
+                    return new PortChecker().check(newValue.toString());
                 }
             });
         }

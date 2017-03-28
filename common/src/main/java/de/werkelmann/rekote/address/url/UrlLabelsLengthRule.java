@@ -1,8 +1,8 @@
 package de.werkelmann.rekote.address.url;
 
-import de.werkelmann.rekote.address.AddressRule;
+import de.werkelmann.rekote.address.ConnectionRule;
 
-public class UrlLabelsLengthRule implements AddressRule {
+public class UrlLabelsLengthRule implements ConnectionRule {
     @Override
     public boolean isValid(String address) {
         for (String label : address.split(".")) {

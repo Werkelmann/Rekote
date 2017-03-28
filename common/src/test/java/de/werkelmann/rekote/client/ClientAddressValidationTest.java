@@ -1,5 +1,6 @@
 package de.werkelmann.rekote.client;
 
+import de.werkelmann.rekote.address.AddressChecker;
 import de.werkelmann.rekote.address.ip.IpChecker;
 import de.werkelmann.rekote.address.port.PortChecker;
 import de.werkelmann.rekote.address.url.UrlChecker;
@@ -11,6 +12,7 @@ import static org.junit.Assert.assertTrue;
 public class ClientAddressValidationTest {
 
     private final String validPort = "8080";
+    private final AddressChecker addressChecker = new AddressChecker();
     private final UrlChecker urlChecker = new UrlChecker();
     private final IpChecker ipChecker = new IpChecker();
     private final PortChecker portChecker = new PortChecker();
@@ -26,8 +28,13 @@ public class ClientAddressValidationTest {
     }
 
     @Test
-    public void testSuccessForValidIp() {
+    public void testSuccessForValidLocalIp() {
         assertTrue(ipChecker.check("192.168.178.12"));
+    }
+
+    @Test
+    public void testSuccessForShorterValidIp() {
+        assertTrue(ipChecker.check("192.168.2.100"));
     }
 
     @Test
@@ -71,5 +78,15 @@ public class ClientAddressValidationTest {
     @Test
     public void testExceptionForInvalidPortNotANumber() {
         assertFalse(portChecker.check("invalid"));
+    }
+
+    @Test
+    public void testAddressCheckerWithIP() {
+        assertTrue(addressChecker.check("192.168.2.100"));
+    }
+
+    @Test
+    public void testAddressCheckerWithUrl() {
+        assertTrue(addressChecker.check("Test-PC"));
     }
 }

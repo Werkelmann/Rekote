@@ -1,8 +1,8 @@
 package de.werkelmann.rekote.address.url;
 
-import de.werkelmann.rekote.address.AddressRule;
+import de.werkelmann.rekote.address.ConnectionRule;
 
-public class UrlValidCharRule implements AddressRule {
+public class UrlValidCharRule implements ConnectionRule {
     @Override
     public boolean isValid(String address) {
         for (char c : address.toCharArray()) {
