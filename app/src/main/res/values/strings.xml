@@ -22,4 +22,5 @@
     <string name="dialog_insert_valid_values">Please insert valid values</string>
     <string name="set_shutdown_time">Set time in minutes to shutdown</string>
     <string name="trivial_error_message">Something went wrong!</string>
+    <string name="unknown_caller">Unknown Caller</string>
 </resources>
