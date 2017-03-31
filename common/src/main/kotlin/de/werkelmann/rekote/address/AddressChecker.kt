@@ -8,7 +8,7 @@ class AddressChecker : ServerConnectionChecker() {
     val urlChecker = UrlChecker()
     val ipChecker = IpChecker()
 
-    override fun check(address: String?): Boolean {
+    override fun check(address: String): Boolean {
         return urlChecker.check(address) || ipChecker.check(address)
     }
 }
