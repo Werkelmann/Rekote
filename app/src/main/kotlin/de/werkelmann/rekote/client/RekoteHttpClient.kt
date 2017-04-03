@@ -1,5 +1,6 @@
 package de.werkelmann.rekote.client
 
+import de.werkelmann.rekote.Paths
 import de.werkelmann.rekote.address.AddressChecker
 import de.werkelmann.rekote.address.ip.IpChecker
 import de.werkelmann.rekote.address.port.PortChecker
@@ -35,7 +36,7 @@ constructor(address: String, port: String) : RekoteClient {
     override fun getHostInfo(): HostInfo {
         try {
             val getInfo = GetInfoTask()
-            return getInfo.execute(buildUrl(PATH_INFO)).get()
+            return getInfo.execute(buildUrl(Paths.INFO)).get()
         } catch (e: Exception) {
             throw RekoteException("Could not get Info from server")
         }
@@ -44,7 +45,7 @@ constructor(address: String, port: String) : RekoteClient {
     override fun stopShutdown(): Boolean {
         try {
             val stopShutdown = CallUrlTask()
-            stopShutdown.execute(buildUrl(PATH_SHUTDOWN_STOP))
+            stopShutdown.execute(buildUrl(Paths.SHUTDOWN_STOP))
             return stopShutdown.get()
         } catch (e: Exception) {
             return false
@@ -54,13 +55,13 @@ constructor(address: String, port: String) : RekoteClient {
 
     @Throws(MalformedURLException::class)
     private fun buildUrl(pathSuffix: String): URL {
-        return URL(PROTOCOL_PREFIX + hostAddress + ":" + port + pathSuffix)
+        return URL(Paths.PROTOCOL_PREFIX + hostAddress + ":" + port + pathSuffix)
     }
 
     override fun shutdownIn(minutes: Int): Boolean {
         try {
             val stopShutdown = CallUrlTask()
-            stopShutdown.execute(buildUrl(PATH_SHUTDOWN_IN + minutes))
+            stopShutdown.execute(buildUrl(Paths.SHUTDOWN_IN + minutes))
             return stopShutdown.get()
         } catch (e: Exception) {
             return false
@@ -71,22 +72,11 @@ constructor(address: String, port: String) : RekoteClient {
     override fun informAboutCall(caller: String): Boolean {
         try {
             val informAboutCall = CallUrlTask()
-            informAboutCall.execute(buildUrl(PATH_CALL + caller))
+            informAboutCall.execute(buildUrl(Paths.CALL + caller))
             return informAboutCall.get()
         } catch (e: Exception) {
             return false
         }
 
-    }
-
-    //TODO move to commons, if server annotations can use them too
-    companion object {
-        private val PROTOCOL_PREFIX = "http://"
-        private val PATH = "/rekote/"
-        private val PATH_INFO = PATH + "info/"
-        private val PATH_SHUTDOWN_IN = PATH + "shutdown/"
-        private val PATH_SHUTDOWN_STOP = PATH_SHUTDOWN_IN + "stop/"
-        private val PATH_EVENT = PATH + "event/"
-        private val PATH_CALL = PATH_EVENT + "call/"
     }
 }
