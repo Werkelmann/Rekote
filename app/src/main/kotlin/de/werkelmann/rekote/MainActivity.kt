@@ -10,7 +10,6 @@ import android.telephony.PhoneStateListener
 import android.telephony.TelephonyManager
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.Button
 import android.widget.Toast
 import de.werkelmann.rekote.call.CallStateListener
 import de.werkelmann.rekote.client.RekoteClient
@@ -21,19 +20,18 @@ import de.werkelmann.rekote.util.RekoteException
 import de.werkelmann.rekote.view.HostAddressInputDialogListener
 import de.werkelmann.rekote.view.ShutdownTimeDialogListener
 import de.werkelmann.rekote.view.dialogs.DialogFactory
+import kotlinx.android.synthetic.main.content_main.*
 
 class MainActivity : AppCompatActivity(), HostAddressInputDialogListener, ShutdownTimeDialogListener {
 
     private var httpClient: RekoteClient? = null
-    private var dialogFactory: DialogFactory? = null
+    private val dialogFactory: DialogFactory = DialogFactory(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         val toolbar = findViewById(R.id.toolbar) as Toolbar
         setSupportActionBar(toolbar)
-
-        dialogFactory = DialogFactory(this)
         initClient()
         initButtons()
         initCallListener()
@@ -45,7 +43,6 @@ class MainActivity : AppCompatActivity(), HostAddressInputDialogListener, Shutdo
         } catch (e: RekoteException) {
             showDialogForInvalidAddress()
         }
-
     }
 
     private fun instantiateClient(): RekoteHttpClient {
@@ -56,19 +53,14 @@ class MainActivity : AppCompatActivity(), HostAddressInputDialogListener, Shutdo
     }
 
     private fun showDialogForInvalidAddress() {
-        dialogFactory!!.showAddressInputDialog()
+        dialogFactory.showAddressInputDialog()
     }
 
     private fun initButtons() {
-        val btnShutdown = findViewById(R.id.btn_shutdown) as Button
-        val btnShutdownIn = findViewById(R.id.btn_shutdown_in) as Button
-        val btnHostInfo = findViewById(R.id.btn_host_info) as Button
-        val btnStopShutdown = findViewById(R.id.btn_stop_shutdown) as Button
-
-        btnShutdown.setOnClickListener { shutdownIn(0) }
-        btnShutdownIn.setOnClickListener { dialogFactory!!.showShutdownTimeDialog() }
-        btnHostInfo.setOnClickListener { showInfo() }
-        btnStopShutdown.setOnClickListener { httpClient!!.stopShutdown() }
+        btn_shutdown.setOnClickListener { shutdownIn(0) }
+        btn_shutdown_in.setOnClickListener { dialogFactory.showShutdownTimeDialog() }
+        btn_host_info.setOnClickListener { showInfo() }
+        btn_stop_shutdown.setOnClickListener { httpClient!!.stopShutdown() }
     }
 
     private fun initCallListener() {
@@ -88,9 +80,9 @@ class MainActivity : AppCompatActivity(), HostAddressInputDialogListener, Shutdo
     private fun showInfo() {
         try {
             val info = httpClient!!.getHostInfo()
-            dialogFactory!!.showInfoDialog(info)
+            dialogFactory.showInfoDialog(info)
         } catch (e: RekoteException) {
-            dialogFactory!!.showInfoExceptionDialog()
+            dialogFactory.showInfoExceptionDialog()
         }
 
     }
@@ -103,13 +95,14 @@ class MainActivity : AppCompatActivity(), HostAddressInputDialogListener, Shutdo
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         val id = item.itemId
 
-        if (id == R.id.action_settings) {
-            val intent = Intent(this, SettingsActivity::class.java)
-            startActivity(intent)
-            return true
+        when (id) {
+            R.id.action_settings -> {
+                val intent = Intent(this, SettingsActivity::class.java)
+                startActivity(intent)
+                return true
+            }
+            else -> return super.onOptionsItemSelected(item)
         }
-
-        return super.onOptionsItemSelected(item)
     }
 
     override fun updateClientSettings(address: String, port: String) {
@@ -124,7 +117,6 @@ class MainActivity : AppCompatActivity(), HostAddressInputDialogListener, Shutdo
             Toast.makeText(this, "Still invalid", Toast.LENGTH_LONG).show()
             showDialogForInvalidAddress()
         }
-
     }
 
     override fun shutdownIn(minutes: Int) {
@@ -132,6 +124,6 @@ class MainActivity : AppCompatActivity(), HostAddressInputDialogListener, Shutdo
     }
 
     override fun showErrorDialog() {
-        dialogFactory!!.showErrorDialog()
+        dialogFactory.showErrorDialog()
     }
 }
