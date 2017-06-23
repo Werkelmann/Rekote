@@ -2,13 +2,13 @@ package de.werkelmann.rekote.server.shutdown
 
 import org.apache.commons.lang3.SystemUtils
 
-class ShutdownFactory {
+object ShutdownFactory {
 
-    companion object {
-        @JvmStatic fun getCorrectShutdown(): AbstractShutdown {
-            if (SystemUtils.IS_OS_WINDOWS) return WindowsShutdown()
-            if (SystemUtils.IS_OS_LINUX) return LinuxShutdown()
-            throw RuntimeException("OS not supported")
+    fun getCorrectShutdown(): AbstractShutdown {
+        when {
+            SystemUtils.IS_OS_WINDOWS -> return WindowsShutdown()
+            SystemUtils.IS_OS_LINUX -> return LinuxShutdown()
+            else -> throw RuntimeException("OS not supported")
         }
     }
 }

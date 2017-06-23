@@ -9,4 +9,5 @@ object Paths {
     const val SHUTDOWN_STOP = SHUTDOWN_IN + "stop/"
     const val EVENT = BASE + "event/"
     const val CALL = EVENT + "call/"
+    const val SCRIPT = BASE + "script/"
 }

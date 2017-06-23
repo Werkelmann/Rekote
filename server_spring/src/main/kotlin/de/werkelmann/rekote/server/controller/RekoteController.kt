@@ -36,4 +36,9 @@ class RekoteController {
         IncomingCallDialog(caller)
         return ResponseEntity(HttpStatus.OK)
     }
+
+    @RequestMapping(path = arrayOf("${Paths.SCRIPT}{script}"), method = arrayOf(RequestMethod.GET))
+    fun runCommand(@PathVariable script: String): ResponseEntity<Void> {
+        return shutdown.runScript(script)
+    }
 }
