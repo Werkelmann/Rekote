@@ -26,6 +26,10 @@ class DialogFactory(private val context: Activity) {
         show(ErrorDialog(), "input")
     }
 
+    fun showScriptDialog() {
+        show(ScriptDialog(), "input")
+    }
+
     private fun show(dialog: android.support.v4.app.DialogFragment, tag: String) {
         dialog.show((context as FragmentActivity).supportFragmentManager, tag)
     }

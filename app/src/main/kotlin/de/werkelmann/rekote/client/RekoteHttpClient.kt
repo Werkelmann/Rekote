@@ -50,7 +50,6 @@ constructor(address: String, port: String) : RekoteClient {
         } catch (e: Exception) {
             return false
         }
-
     }
 
     @Throws(MalformedURLException::class)
@@ -66,7 +65,6 @@ constructor(address: String, port: String) : RekoteClient {
         } catch (e: Exception) {
             return false
         }
-
     }
 
     override fun informAboutCall(caller: String): Boolean {
@@ -77,6 +75,15 @@ constructor(address: String, port: String) : RekoteClient {
         } catch (e: Exception) {
             return false
         }
+    }
 
+    override fun runScript(script: String): Boolean {
+        try {
+            val runScript = CallUrlTask()
+            runScript.execute(buildUrl(Paths.SCRIPT + script))
+            return runScript.get()
+        } catch (e: Exception) {
+            return false
+        }
     }
 }

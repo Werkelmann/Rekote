@@ -23,4 +23,6 @@
     <string name="set_shutdown_time">Set time in minutes to shutdown</string>
     <string name="trivial_error_message">Something went wrong!</string>
     <string name="unknown_caller">Unknown Caller</string>
+    <string name="btn_script">Run Script</string>
+    <string name="script">Enter script to run (without extension)</string>
 </resources>

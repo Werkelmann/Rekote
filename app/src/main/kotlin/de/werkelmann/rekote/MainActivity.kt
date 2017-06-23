@@ -18,11 +18,13 @@ import de.werkelmann.rekote.settings.SettingsActivity
 import de.werkelmann.rekote.settings.SettingsConstants
 import de.werkelmann.rekote.util.RekoteException
 import de.werkelmann.rekote.view.HostAddressInputDialogListener
+import de.werkelmann.rekote.view.ScriptDialogListener
 import de.werkelmann.rekote.view.ShutdownTimeDialogListener
 import de.werkelmann.rekote.view.dialogs.DialogFactory
 import kotlinx.android.synthetic.main.content_main.*
 
-class MainActivity : AppCompatActivity(), HostAddressInputDialogListener, ShutdownTimeDialogListener {
+class MainActivity : AppCompatActivity(), HostAddressInputDialogListener, ShutdownTimeDialogListener,
+        ScriptDialogListener {
 
     private var httpClient: RekoteClient? = null
     private val dialogFactory: DialogFactory = DialogFactory(this)
@@ -61,6 +63,7 @@ class MainActivity : AppCompatActivity(), HostAddressInputDialogListener, Shutdo
         btn_shutdown_in.setOnClickListener { dialogFactory.showShutdownTimeDialog() }
         btn_host_info.setOnClickListener { showInfo() }
         btn_stop_shutdown.setOnClickListener { httpClient!!.stopShutdown() }
+        btn_script.setOnClickListener { dialogFactory.showScriptDialog() }
     }
 
     private fun initCallListener() {
@@ -125,5 +128,9 @@ class MainActivity : AppCompatActivity(), HostAddressInputDialogListener, Shutdo
 
     override fun showErrorDialog() {
         dialogFactory.showErrorDialog()
+    }
+
+    override fun runScript(script: String) {
+        httpClient!!.runScript(script)
     }
 }

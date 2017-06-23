@@ -7,4 +7,5 @@ interface RekoteClient {
     fun stopShutdown(): Boolean
     fun shutdownIn(minutes: Int): Boolean
     fun informAboutCall(caller: String): Boolean
+    fun runScript(script: String): Boolean
 }

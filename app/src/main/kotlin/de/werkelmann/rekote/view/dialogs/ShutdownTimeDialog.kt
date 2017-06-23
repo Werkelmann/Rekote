@@ -41,6 +41,5 @@ class ShutdownTimeDialog : DialogFragment() {
         } catch (e: ClassCastException) {
             throw ClassCastException(activity!!.toString() + " must implement ShutdownTimeDialogListener")
         }
-
     }
 }
