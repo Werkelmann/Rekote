@@ -72,12 +72,12 @@ class MainActivity : AppCompatActivity(), HostAddressInputDialogListener, Shutdo
         tm.listen(phoneStateListener, PhoneStateListener.LISTEN_CALL_STATE)
     }
 
-    private fun showResponseInToast(isSuccessful: Boolean) {
+    private fun showResponseInToast(isSuccessful: Boolean, message: String) {
         if (isSuccessful) {
-            Toast.makeText(this@MainActivity, "Shutdown successful", Toast.LENGTH_LONG).show()
+            Toast.makeText(this, "$message successful", Toast.LENGTH_LONG).show()
             return
         }
-        Toast.makeText(this@MainActivity, "Failure at shutdownIn", Toast.LENGTH_LONG).show()
+        Toast.makeText(this, "Failure at $message", Toast.LENGTH_LONG).show()
     }
 
     private fun showInfo() {
@@ -97,7 +97,6 @@ class MainActivity : AppCompatActivity(), HostAddressInputDialogListener, Shutdo
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         val id = item.itemId
-
         when (id) {
             R.id.action_settings -> {
                 val intent = Intent(this, SettingsActivity::class.java)
@@ -123,7 +122,7 @@ class MainActivity : AppCompatActivity(), HostAddressInputDialogListener, Shutdo
     }
 
     override fun shutdownIn(minutes: Int) {
-        showResponseInToast(httpClient!!.shutdownIn(minutes))
+        showResponseInToast(httpClient!!.shutdownIn(minutes), "shutdown")
     }
 
     override fun showErrorDialog() {
@@ -131,6 +130,6 @@ class MainActivity : AppCompatActivity(), HostAddressInputDialogListener, Shutdo
     }
 
     override fun runScript(script: String) {
-        httpClient!!.runScript(script)
+        showResponseInToast(httpClient!!.runScript(script), "running $script")
     }
 }

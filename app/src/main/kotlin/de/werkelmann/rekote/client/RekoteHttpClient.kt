@@ -43,10 +43,26 @@ constructor(address: String, port: String) : RekoteClient {
     }
 
     override fun stopShutdown(): Boolean {
+        return callUrl(Paths.SHUTDOWN_STOP)
+    }
+
+    override fun shutdownIn(minutes: Int): Boolean {
+        return callUrl(Paths.SHUTDOWN_IN + minutes)
+    }
+
+    override fun informAboutCall(caller: String): Boolean {
+        return callUrl(Paths.CALL + caller)
+    }
+
+    override fun runScript(script: String): Boolean {
+        return callUrl(Paths.SCRIPT + script)
+    }
+
+    private fun callUrl(path: String): Boolean {
         try {
-            val stopShutdown = CallUrlTask()
-            stopShutdown.execute(buildUrl(Paths.SHUTDOWN_STOP))
-            return stopShutdown.get()
+            val runScript = CallUrlTask()
+            runScript.execute(buildUrl(path))
+            return runScript.get()
         } catch (e: Exception) {
             return false
         }
@@ -55,35 +71,5 @@ constructor(address: String, port: String) : RekoteClient {
     @Throws(MalformedURLException::class)
     private fun buildUrl(pathSuffix: String): URL {
         return URL(Paths.PROTOCOL_PREFIX + hostAddress + ":" + port + pathSuffix)
-    }
-
-    override fun shutdownIn(minutes: Int): Boolean {
-        try {
-            val stopShutdown = CallUrlTask()
-            stopShutdown.execute(buildUrl(Paths.SHUTDOWN_IN + minutes))
-            return stopShutdown.get()
-        } catch (e: Exception) {
-            return false
-        }
-    }
-
-    override fun informAboutCall(caller: String): Boolean {
-        try {
-            val informAboutCall = CallUrlTask()
-            informAboutCall.execute(buildUrl(Paths.CALL + caller))
-            return informAboutCall.get()
-        } catch (e: Exception) {
-            return false
-        }
-    }
-
-    override fun runScript(script: String): Boolean {
-        try {
-            val runScript = CallUrlTask()
-            runScript.execute(buildUrl(Paths.SCRIPT + script))
-            return runScript.get()
-        } catch (e: Exception) {
-            return false
-        }
     }
 }
