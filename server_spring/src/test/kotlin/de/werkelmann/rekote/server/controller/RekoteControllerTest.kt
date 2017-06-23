@@ -35,7 +35,7 @@ class RekoteControllerTest {
     @Test
     @Throws(Exception::class)
     fun testGetInfo() {
-        mockMvc!!.perform(get("/rekote/info"))
+        mockMvc!!.perform(get("/rekote/info/"))
                 .andExpect(status().isOk)
                 .andExpect(jsonPath("hostName", not(nullValue())))
                 .andExpect(jsonPath("ipAddress", not(nullValue())))
